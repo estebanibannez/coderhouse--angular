@@ -1,3 +1,4 @@
+import { FightingComponent } from './shared/fighting/fighting.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ContactoComponent } from 'src/app/shared/contacto/contacto.component';
@@ -8,6 +9,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'contacto', component: ContactoComponent },
   { path: 'gameofday', component: GameDayComponent },
+  { path: 'fighting', component: FightingComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
 

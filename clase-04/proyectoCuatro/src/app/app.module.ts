@@ -11,6 +11,7 @@ import { CardComponent } from './components/card/card.component';
 import { ContactoComponent } from './shared/contacto/contacto.component';
 import { CardGameDayComponent } from './components/card-game-day/card-game-day.component';
 import { GameDayComponent } from './shared/game-day/game-day.component';
+import { FightingComponent } from './shared/fighting/fighting.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { GameDayComponent } from './shared/game-day/game-day.component';
     CardComponent,
     ContactoComponent,
     CardGameDayComponent,
-    GameDayComponent
+    GameDayComponent,
+    FightingComponent
   ],
   imports: [
     BrowserModule,
