@@ -12,6 +12,7 @@ import { ContactoComponent } from './shared/contacto/contacto.component';
 import { CardGameDayComponent } from './components/card-game-day/card-game-day.component';
 import { GameDayComponent } from './shared/game-day/game-day.component';
 import { FightingComponent } from './shared/fighting/fighting.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FightingComponent } from './shared/fighting/fighting.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

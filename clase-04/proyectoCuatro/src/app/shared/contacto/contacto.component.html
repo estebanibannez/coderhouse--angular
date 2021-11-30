@@ -1,34 +1,153 @@
-<div class="mb-3 row">
-  <label for="staticEmail" class="col-sm-2 col-form-label">Nombre</label>
-  <div class="col-sm-10">
-    <input type="text" class="form-control" id="nombre" value="">
+<form [formGroup]="formularioContacto">
+
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Nombres</label>
+    <div class="col-sm-10">
+      <input formControlName="nombres" class="form-control" maxlength="70" matInput required type="text" />
+    </div>
+
+    <div class="text-danger" *ngIf="
+    formularioContacto.controls['nombres']?.invalid &&
+      (formularioContacto.controls['nombres']?.dirty ||
+        formularioContacto.controls['nombres']?.touched)
+    ">
+      <div *ngFor="
+        let validation of VALIDATION_MESSAGES.nombres
+      ">
+        <span *ngIf="
+          formularioContacto
+            .get('nombres')?.hasError(validation.type) &&
+          (formularioContacto.get('nombres')?.dirty ||
+            formularioContacto.get('nombres')?.touched)
+        ">
+          {{ validation.message }}
+        </span>
+      </div>
+    </div>
   </div>
-</div>
-<div class="mb-3 row">
-  <label for="staticEmail" class="col-sm-2 col-form-label">Correo electrónico</label>
-  <div class="col-sm-10">
-    <input type="text" class="form-control" id="staticEmail" value="">
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Correo electronico</label>
+    <div class="col-sm-10">
+      <input formControlName="correo" class="form-control" maxlength="70" matInput required type="text" />
+    </div>
+
+    <div class="text-danger" *ngIf="
+    formularioContacto.controls['correo']?.invalid &&
+      (formularioContacto.controls['correo']?.dirty ||
+        formularioContacto.controls['correo']?.touched)
+    ">
+      <div *ngFor="
+        let validation of VALIDATION_MESSAGES.correo
+      ">
+        <span *ngIf="
+          formularioContacto
+            .get('correo')?.hasError(validation.type) &&
+          (formularioContacto.get('correo')?.dirty ||
+            formularioContacto.get('correo')?.touched)
+        ">
+          {{ validation.message }}
+        </span>
+      </div>
+    </div>
   </div>
-</div>
 
 
-<select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example">
-  <option selected>Selecciona una opción</option>
-  <option value="1">Consulta</option>
-  <option value="2">Reclamo</option>
-  <option value="3">Sugerencia</option>
-</select>
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Fono</label>
+    <div class="col-sm-10">
+      <input formControlName="fono" class="form-control" maxlength="70" matInput required type="text" />
+    </div>
 
-<div class="mb-3 row">
-
-  <div class="input-group">
-    <span class="input-group-text">Comentanos...</span>
-    <textarea class="form-control" aria-label="With textarea"></textarea>
+    <div class="text-danger" *ngIf="
+    formularioContacto.controls['fono']?.invalid &&
+      (formularioContacto.controls['fono']?.dirty ||
+        formularioContacto.controls['fono']?.touched)
+    ">
+      <div *ngFor="
+        let validation of VALIDATION_MESSAGES.fono
+      ">
+        <span *ngIf="
+          formularioContacto
+            .get('fono')?.hasError(validation.type) &&
+          (formularioContacto.get('fono')?.dirty ||
+            formularioContacto.get('fono')?.touched)
+        ">
+          {{ validation.message }}
+        </span>
+      </div>
+    </div>
   </div>
 
 
-</div>
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Tipo: </label>
+    <div class="col-sm-10">
+      <select class="form-select form-select-sm mb-3" aria-label=".form-select-sm example" formControlName="tipo">
+        <option selected>Selecciona una opción</option>
+        <option value="consulta">Consulta</option>
+        <option value="reclamo">Reclamo</option>
+        <option value="sugerencia">Sugerencia</option>
+      </select>
+    </div>
 
-<div class="mb-3 row p-3">
-  <button type="button" class="btn btn-outline-primary">Enviar</button>
-</div>
+    <div class="text-danger" *ngIf="
+    formularioContacto.controls['tipo']?.invalid &&
+      (formularioContacto.controls['tipo']?.dirty ||
+        formularioContacto.controls['tipo']?.touched)
+    ">
+      <div *ngFor="
+        let validation of VALIDATION_MESSAGES.tipo
+      ">
+        <span *ngIf="
+          formularioContacto
+            .get('tipo')?.hasError(validation.type) &&
+          (formularioContacto.get('tipo')?.dirty ||
+            formularioContacto.get('tipo')?.touched)
+        ">
+          {{ validation.message }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="mb-3 row">
+    <div class="input-group">
+      <span class="input-group-text">Comentanos...</span>
+      <textarea formControlName="mensaje" class="form-control" aria-label="With textarea"></textarea>
+    </div>
+    <div class="text-danger" *ngIf="
+    formularioContacto.controls['mensaje']?.invalid &&
+      (formularioContacto.controls['mensaje']?.dirty ||
+        formularioContacto.controls['mensaje']?.touched)
+    ">
+      <div *ngFor="
+        let validation of VALIDATION_MESSAGES.mensaje
+      ">
+        <span *ngIf="
+          formularioContacto
+            .get('mensaje')?.hasError(validation.type) &&
+          (formularioContacto.get('mensaje')?.dirty ||
+            formularioContacto.get('mensaje')?.touched)
+        ">
+          {{ validation.message }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- pruebas data binding -->
+  <!-- <p>
+    {{ formularioContacto.value  | json }}
+  </p> -->
+
+
+  <div class="mb-3 row p-3">
+    <button type="submit" class="btn btn-outline-primary" (click)="enviarFormulario()">Enviar</button>
+  </div>
+
+
+</form>
