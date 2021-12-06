@@ -1,1 +1,27 @@
-<p>info works!</p>
+<div class="row">
+  <div class="col-4">
+    <img src="assets/images/{{pelicula.imagen}}.jpg" class="img-responsive" style="max-width:15em">
+  </div>
+  <div class="col-8">
+    <div class="card mb-4 shadow-sm">
+
+      <div class="card-body">
+        <h6>Resumen</h6>
+        <p class="card-text">{{pelicula.descripcion}}</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-outline-secondary" [routerLink]="['/home']">Volver</button>
+          </div>
+          <small class="text-muted">$ {{ pelicula.precio}}</small>
+        </div>
+      </div>
+      <div class="card-body">
+        <h6>Elenco</h6>
+        <div class="d-flex justify-content-between align-items-center" *ngFor="let actor of pelicula.elenco">
+          <small class="text-muted">{{ actor.nombre}} -- {{ actor.personaje}}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

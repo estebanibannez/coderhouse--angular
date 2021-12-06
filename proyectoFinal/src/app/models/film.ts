@@ -6,7 +6,12 @@ export interface IPelicula {
 	precio: string;
 	estado: estado;
 	imagen: string;
-	elenco: string;
+	elenco: IElenco[];
+}
+
+export interface IElenco {
+	nombre: string;
+	personaje: string;
 }
 
 enum estado {

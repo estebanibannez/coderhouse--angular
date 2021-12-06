@@ -1,12 +1,15 @@
 <div class="list-group">
   <div *ngFor="let item of listadoPeliculas">
-    <a href="#" class="list-group-item list-group-item-action"
+    <div class="list-group-item list-group-item-action"
       [ngClass]="item.estado == 0 ? 'list-group-item-danger' : 'list-group-item-info'" aria-current="true">
       <div class="row">
         <div class="col-3">
           <img src="assets/images/{{item.imagen}}.jpg" class="img-responsive" style="max-width:5em">
+          <small class="text-muted">{{item.id  }} </small>
           <hr>
-          <button type="button" class="btn btn-dark btn-xs"><i class="fas fa-plus"> </i> Ver más Info </button>
+         
+          <button type="button" class="btn btn-dark btn-xs" [routerLink]="['/info', item.id]"><i class="fas fa-plus">
+            </i> Ver más Info </button>
         </div>
         <div class="col-8">
           <h5 class="mb-1">{{item.nombre}}</h5>
@@ -25,6 +28,6 @@
 
       </div>
 
-    </a>
+    </div>
   </div>
 </div>
