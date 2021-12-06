@@ -1,0 +1,125 @@
+<h3>REGISTRO</h3>
+<form [formGroup]="formularioRegister">
+
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Nombre Completo</label>
+    <div class="col-sm-10">
+      <input formControlName="nombres" class="form-control" maxlength="70" matInput required type="text" />
+    </div>
+
+    <div class="text-danger" *ngIf="
+    formularioRegister.controls['nombres']?.invalid &&
+            (formularioRegister.controls['nombres']?.dirty ||
+            formularioRegister.controls['nombres']?.touched)
+          ">
+      <div *ngFor="
+              let validation of VALIDATION_MESSAGES.nombres
+            ">
+        <span *ngIf="
+            formularioRegister
+                  .get('nombres')?.hasError(validation.type) &&
+                (formularioRegister.get('nombres')?.dirty ||
+                formularioRegister.get('nombres')?.touched)
+              ">
+          {{ validation.message }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Correo electrónico</label>
+    <div class="col-sm-10">
+      <input formControlName="correo" class="form-control" maxlength="70" matInput required type="text" />
+    </div>
+
+    <div class="text-danger" *ngIf="
+    formularioRegister.controls['correo']?.invalid &&
+        (formularioRegister.controls['correo']?.dirty ||
+        formularioRegister.controls['correo']?.touched)
+      ">
+      <div *ngFor="
+          let validation of VALIDATION_MESSAGES.correo
+        ">
+        <span *ngIf="
+        formularioRegister
+              .get('correo')?.hasError(validation.type) &&
+            (formularioRegister.get('correo')?.dirty ||
+            formularioRegister.get('correo')?.touched)
+          ">
+          {{ validation.message }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Contraseña</label>
+    <div class="col-sm-10">
+      <input formControlName="password" class="form-control" maxlength="70" matInput required type="password"
+        placeholder="" />
+    </div>
+
+    <div class="text-danger" *ngIf="
+      formularioRegister.controls['password']?.invalid &&
+        (formularioRegister.controls['password']?.dirty ||
+          formularioRegister.controls['password']?.touched)
+      ">
+      <div *ngFor="
+          let validation of VALIDATION_MESSAGES.password
+        ">
+        <span *ngIf="
+            formularioRegister
+              .get('password')?.hasError(validation.type) &&
+            (formularioRegister.get('password')?.dirty ||
+              formularioRegister.get('password')?.touched)
+          ">
+          {{ validation.message }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+<!-- 
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Repetir Contraseña</label>
+    <div class="col-sm-10">
+      <input formControlName="repassword" class="form-control" maxlength="70" matInput required type="password"
+        placeholder="" />
+    </div>
+
+    <div class="text-danger" *ngIf="
+      formularioRegister.controls['repassword']?.invalid &&
+        (formularioRegister.controls['repassword']?.dirty ||
+          formularioRegister.controls['repassword']?.touched)
+      ">
+      <div *ngFor="
+          let validation of VALIDATION_MESSAGES.repassword
+        ">
+        <span *ngIf="
+            formularioRegister
+              .get('repassword')?.hasError(validation.type) &&
+            (formularioRegister.get('repassword')?.dirty ||
+              formularioRegister.get('repassword')?.touched)
+          ">
+          {{ validation.message }}
+        </span>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- pruebas data binding -->
+  <!-- <p>
+      {{ formularioContacto.value  | json }}
+    </p> -->
+
+
+  <div class="mb-3 row p-3">
+    <button type="submit" class="btn btn-outline-primary" (click)="register()">Registrarme</button>
+  </div>
+
+
+</form>

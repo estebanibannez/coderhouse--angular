@@ -1,0 +1,69 @@
+<h3>ACCEDER</h3>
+<form [formGroup]="formularioLogin">
+
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Correo electronico</label>
+    <div class="col-sm-10">
+      <input formControlName="correo" class="form-control" maxlength="70" matInput required type="text" />
+    </div>
+
+    <div class="text-danger" *ngIf="
+    formularioLogin.controls['correo']?.invalid &&
+        (formularioLogin.controls['correo']?.dirty ||
+        formularioLogin.controls['correo']?.touched)
+      ">
+      <div *ngFor="
+          let validation of VALIDATION_MESSAGES.correo
+        ">
+        <span *ngIf="
+        formularioLogin
+              .get('correo')?.hasError(validation.type) &&
+            (formularioLogin.get('correo')?.dirty ||
+            formularioLogin.get('correo')?.touched)
+          ">
+          {{ validation.message }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Contraseña</label>
+    <div class="col-sm-10">
+      <input formControlName="password" class="form-control" maxlength="70" matInput required type="password" placeholder=""/>
+    </div>
+
+    <div class="text-danger" *ngIf="
+      formularioLogin.controls['password']?.invalid &&
+        (formularioLogin.controls['password']?.dirty ||
+          formularioLogin.controls['password']?.touched)
+      ">
+      <div *ngFor="
+          let validation of VALIDATION_MESSAGES.password
+        ">
+        <span *ngIf="
+            formularioLogin
+              .get('password')?.hasError(validation.type) &&
+            (formularioLogin.get('password')?.dirty ||
+              formularioLogin.get('password')?.touched)
+          ">
+          {{ validation.message }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- pruebas data binding -->
+  <!-- <p>
+      {{ formularioContacto.value  | json }}
+    </p> -->
+
+
+  <div class="mb-3 row p-3">
+    <button type="submit" class="btn btn-outline-primary" (click)="enviarFormulario()">Acceder</button>
+  </div>
+
+
+</form>
