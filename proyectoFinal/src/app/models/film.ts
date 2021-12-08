@@ -3,10 +3,12 @@ export interface IPelicula {
 	nombre: string;
 	descripcion: string;
 	fecha: string;
-	precio: string;
+	precio: number;
 	estado: estado;
 	imagen: string;
 	elenco: IElenco[];
+	stock: number;
+	cantidad: number;
 }
 
 export interface IElenco {

@@ -5,9 +5,8 @@
       <div class="row">
         <div class="col-3">
           <img src="assets/images/{{item.imagen}}.jpg" class="img-responsive" style="max-width:5em">
-          <small class="text-muted">{{item.id  }} </small>
           <hr>
-         
+
           <button type="button" class="btn btn-dark btn-xs" [routerLink]="['/info', item.id]"><i class="fas fa-plus">
             </i> Ver más Info </button>
         </div>
@@ -17,12 +16,13 @@
           <small> <span *ngIf="item.estado == 0" class="badge bg-danger rounded-pill">En Prestamo</span>
             <span *ngIf="item.estado == 1" class="badge bg-primary rounded-pill">Disponible</span></small>
           <p class="mb-1">{{item.descripcion}}</p>
-          <small>Precio: $ {{item.precio}}</small>
+          <small>Precio: <strong>$ {{item.precio}}</strong> </small>
         </div>
 
         <div class="col-1">
 
-          <button type="button" class="btn btn-light" *ngIf="item.estado == 1"><i class="fas fa-cart-plus"></i></button>
+          <button type="button" class="btn btn-light" *ngIf="item.estado == 1" (click)="onAddToCart(item)"><i
+              class="fas fa-cart-plus"></i></button>
         </div>
 
 

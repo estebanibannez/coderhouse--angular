@@ -22,8 +22,6 @@ export class InfoComponent implements OnInit {
 	}
 
 	getPeliculaById(id: number) {
-		debugger
 		this.pelicula = this.pelisService.getPeliculasById(id);
-		console.log(this.pelicula);
 	}
 }
