@@ -45,7 +45,7 @@ export class CartService {
 			return _peli;
 		});
 
-		// Add a new product to the cart if it's a new product
+		// Agrega un producto nuevo al carrito si es un producto nuevo
 		if (!exists) {
 			pelicula.precio = pelicula.precio;
 			pelicula.cantidad = 1;

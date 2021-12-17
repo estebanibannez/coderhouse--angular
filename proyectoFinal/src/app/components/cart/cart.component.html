@@ -1,38 +1,29 @@
 <h4 class="d-flex justify-content-between align-items-center mb-3">
-  <span class="text-muted">Carrito</span>
-  <span class="badge badge-secondary badge-pill">3</span>
-</h4>
-<ul class="list-group mb-3">
-  <li class="list-group-item d-flex justify-content-between bg-light">
-    <div class="text-info">
-      <h6 class="my-0">Listado peliculas</h6>
-      <small></small>
-    </div>
-    <span class="text-success">${{ cartTotal }}</span>
-  </li>
-  <li
-    class="list-group-item d-flex justify-content-between bg-light"
-    *ngFor="let item of carrito?.peliculas"
-  >
-    <div class="text-success">
-      <h6 class="my-0">{{ item.nombre }}</h6>
-      <!-- <small class="text-muted">{{item.nombre}}</small> -->
-    </div>
-    <span class="text-muted"> $ {{ item.precio }}</span>
-    <button class="btn btn-dark btn-xs" (click) = 'deleteProduct(item.id)'>x</button>
-  </li>
-
-  <li class="list-group-item d-flex justify-content-between">
-    <span>$ Total</span>
-    <strong>{{ cartTotal }}</strong>
-  </li>
-</ul>
-
-<form class="card p-2">
-  <div class="input-group">
-    <input type="text" class="form-control" placeholder="Promo code" />
-    <div class="input-group-append">
-      <button type="submit" class="btn btn-secondary">Pagar</button>
-    </div>
+  <span class="text-white">Carrito</span><i class="fas fas-cart"></i>
+  <div class="example-button-container">
+    <button mat-mini-fab color="primary">{{ numPeliculas }}</button>
   </div>
-</form>
+</h4>
+
+<mat-card>
+  <mat-card-title>Carrito de compras</mat-card-title>
+  <mat-card-subtitle
+    >Productos en el carrito {{ numPeliculas }}</mat-card-subtitle
+  >
+  <mat-nav-list>
+    <mat-list-item *ngFor="let item of carrito?.peliculas">
+      <a matLine href="javascript:void(0)">
+        {{ item.cantidad }} x {{ item.nombre }}</a
+      >
+      <button mat-icon-button color="primary" (click)="deleteProduct(item.id)">
+        <mat-icon>delete_forever</mat-icon>
+      </button>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>Total a pagar : $ {{ cartTotal }} </mat-list-item>
+  </mat-nav-list>
+  <mat-card-actions>
+    <button mat-stroked-button color="primary">PAGAR</button>
+    <!-- <button mat-button>SHARE</button> -->
+  </mat-card-actions>
+</mat-card>

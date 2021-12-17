@@ -18,7 +18,7 @@ export class ListComponent implements OnInit {
 	ngOnInit(): void {}
 
 	getPeliculas() {
-		this.pelisService.getPeliculas().subscribe((film) => (this.listadoPeliculas = film));
+		this.pelisService.getPeliculas().then((data) => (this.listadoPeliculas = data.peliculas));
 	}
 	onAddToCart(item: any) {
 		this.cartService.addToCart(item);
