@@ -11,9 +11,26 @@
           maxlength="70"
           placeholder="Ex. pat@example.com"
         />
-        <mat-error *ngFor="let validation of VALIDATION_MESSAGES.correo">
-          <strong>{{ validation.message }} </strong>
-        </mat-error>
+        <mat-hint
+          class="text-danger"
+          *ngIf="
+            formularioLogin.controls['correo']?.invalid &&
+            (formularioLogin.controls['correo']?.dirty ||
+              formularioLogin.controls['correo']?.touched)
+          "
+        >
+          <div *ngFor="let validation of VALIDATION_MESSAGES.correo">
+            <span
+              *ngIf="
+                formularioLogin.get('correo')?.hasError(validation.type) &&
+                (formularioLogin.get('correo')?.dirty ||
+                  formularioLogin.get('correo')?.touched)
+              "
+            >
+              <strong>{{ validation.message }} </strong>
+            </span>
+          </div>
+        </mat-hint>
       </mat-form-field>
       <hr />
       <mat-form-field class="example-full-width" appearance="fill">
@@ -25,9 +42,26 @@
           maxlength="70"
           placeholder=""
         />
-        <mat-error *ngFor="let validation of VALIDATION_MESSAGES.password">
-          <strong>{{ validation.message }} </strong>
-        </mat-error>
+        <mat-hint
+          class="text-danger"
+          *ngIf="
+            formularioLogin.controls['password']?.invalid &&
+            (formularioLogin.controls['password']?.dirty ||
+              formularioLogin.controls['password']?.touched)
+          "
+        >
+          <div *ngFor="let validation of VALIDATION_MESSAGES.password">
+            <span
+              *ngIf="
+                formularioLogin.get('password')?.hasError(validation.type) &&
+                (formularioLogin.get('password')?.dirty ||
+                  formularioLogin.get('password')?.touched)
+              "
+            >
+              <strong>{{ validation.message }} </strong>
+            </span>
+          </div>
+        </mat-hint>
       </mat-form-field>
 
       <!-- pruebas data binding -->
