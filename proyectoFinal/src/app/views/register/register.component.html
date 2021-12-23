@@ -3,28 +3,59 @@
   <div class="row">
     <form [formGroup]="formularioRegister" class="example-form">
       <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label>Nombre Completo</mat-label>
+        <mat-label>Nombres</mat-label>
         <input
-          type="email"
+          type="text"
           matInput
-          formControlName="nombres"
+          formControlName="firstname"
           maxlength="70"
           placeholder=""
         />
         <mat-hint
           class="text-danger"
           *ngIf="
-            formularioRegister.controls['nombres']?.invalid &&
-            (formularioRegister.controls['nombres']?.dirty ||
-              formularioRegister.controls['nombres']?.touched)
+            formularioRegister.controls['firstname']?.invalid &&
+            (formularioRegister.controls['firstname']?.dirty ||
+              formularioRegister.controls['firstname']?.touched)
           "
         >
-          <div *ngFor="let validation of VALIDATION_MESSAGES.nombres">
+          <div *ngFor="let validation of VALIDATION_MESSAGES.firstname">
             <span
               *ngIf="
-                formularioRegister.get('nombres')?.hasError(validation.type) &&
-                (formularioRegister.get('nombres')?.dirty ||
-                  formularioRegister.get('nombres')?.touched)
+                formularioRegister.get('firstname')?.hasError(validation.type) &&
+                (formularioRegister.get('firstname')?.dirty ||
+                  formularioRegister.get('firstname')?.touched)
+              "
+            >
+              <strong>{{ validation.message }} </strong>
+            </span>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Apellidos</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="lastname"
+          maxlength="70"
+          placeholder=""
+        />
+        <mat-hint
+          class="text-danger"
+          *ngIf="
+            formularioRegister.controls['lastname']?.invalid &&
+            (formularioRegister.controls['lastname']?.dirty ||
+              formularioRegister.controls['lastname']?.touched)
+          "
+        >
+          <div *ngFor="let validation of VALIDATION_MESSAGES.lastname">
+            <span
+              *ngIf="
+                formularioRegister.get('lastname')?.hasError(validation.type) &&
+                (formularioRegister.get('lastname')?.dirty ||
+                  formularioRegister.get('lastname')?.touched)
               "
             >
               <strong>{{ validation.message }} </strong>
@@ -38,24 +69,24 @@
         <input
           type="email"
           matInput
-          formControlName="correo"
+          formControlName="email"
           maxlength="70"
           placeholder="Ex. pat@example.com"
         />
         <mat-hint
           class="text-danger"
           *ngIf="
-            formularioRegister.controls['correo']?.invalid &&
-            (formularioRegister.controls['correo']?.dirty ||
-              formularioRegister.controls['correo']?.touched)
+            formularioRegister.controls['email']?.invalid &&
+            (formularioRegister.controls['email']?.dirty ||
+              formularioRegister.controls['email']?.touched)
           "
         >
-          <div *ngFor="let validation of VALIDATION_MESSAGES.correo">
+          <div *ngFor="let validation of VALIDATION_MESSAGES.email">
             <span
               *ngIf="
-                formularioRegister.get('correo')?.hasError(validation.type) &&
-                (formularioRegister.get('correo')?.dirty ||
-                  formularioRegister.get('correo')?.touched)
+                formularioRegister.get('email')?.hasError(validation.type) &&
+                (formularioRegister.get('email')?.dirty ||
+                  formularioRegister.get('email')?.touched)
               "
             >
               <strong>{{ validation.message }} </strong>
@@ -102,7 +133,7 @@
         </p> -->
 
       <div class="mb-3 row p-3">
-        <button mat-stroked-button color="primary" (click)="register()">
+        <button mat-stroked-button color="primary" (click)="onSubmit()">
           REGISTRARME
         </button>
       </div>

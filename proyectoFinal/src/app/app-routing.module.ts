@@ -5,10 +5,12 @@ import { HomeComponent } from 'src/app/views/home/home.component';
 import { LoginComponent } from 'src/app/views/login/login.component';
 import { RegisterComponent } from 'src/app/views/register/register.component';
 import { NotFound404Component } from 'src/app/views/not-found404/not-found404.component';
+import { BackofficeComponent } from './views/backoffice/backoffice.component';
 
 const routes: Routes = [
 	{ path: 'register', component: RegisterComponent },
 	{ path: 'login', component: LoginComponent },
+	{ path: 'backoffice', component: BackofficeComponent },
 	{ path: 'info/:id', component: InfoComponent },
 	{ path: 'home', component: HomeComponent },
 	{ path: '', redirectTo: '/home', pathMatch: 'full' },

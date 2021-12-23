@@ -15,7 +15,10 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { NotFound404Component } from "./views/not-found404/not-found404.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MaterialModule } from "src/app/material.module";
-
+import { HttpClientModule } from "@angular/common/http";
+import { AngularFireModule } from "@angular/fire/compat";
+import { environment } from "../environments/environment";
+import { BackofficeComponent } from './views/backoffice/backoffice.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +31,7 @@ import { MaterialModule } from "src/app/material.module";
     LoginComponent,
     HomeComponent,
     NotFound404Component,
+    BackofficeComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +39,8 @@ import { MaterialModule } from "src/app/material.module";
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MaterialModule,
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
   providers: [],
   bootstrap: [AppComponent],

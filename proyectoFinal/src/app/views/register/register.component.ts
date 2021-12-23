@@ -1,97 +1,170 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
+import { AuthService } from "src/app/services/auth.service";
 
 @Component({
-	selector: 'app-register',
-	templateUrl: './register.component.html',
-	styleUrls: [ './register.component.css' ],
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.css"],
 })
 export class RegisterComponent implements OnInit {
-	formularioRegister: FormGroup;
-	constructor(private fb: FormBuilder) {
-		this.formularioRegister = this.fb.group({
-			nombres: [
-				'',
-				Validators.compose([
-					Validators.required,
-					Validators.minLength(4),
-					Validators.maxLength(70),
-					Validators.pattern('^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœñ ]+$'),
-				]),
-			],
-			correo: [
-				'',
-				{
-					validators: [
-						Validators.required,
-						Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$'),
-					],
-					updateOn: 'change',
-				},
-			],
-			password: [
-				'',
-				{
-					validators: [ Validators.required, Validators.minLength(6), Validators.maxLength(20) ],
-					updateOn: 'change',
-				},
-			],
-			// ,
-			// repassword: [
-			// 	'',
-			// 	{
-			// 		validators: [ Validators.required ],
-			// 		updateOn: 'change',
-			// 	},
-			// ],
-		});
-	}
+  formularioRegister: FormGroup;
+  constructor(
+    private fb: FormBuilder,
+    private _authService: AuthService,
+    private router: Router,
+    private _snackBar: MatSnackBar,
+  ) {
+    this.formularioRegister = this.fb.group({
+      firstname: [
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(70),
+          Validators.pattern(
+            "^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœñ ]+$",
+          ),
+        ]),
+      ],
+      lastname: [
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(70),
+          Validators.pattern(
+            "^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœñ ]+$",
+          ),
+        ]),
+      ],
+      email: [
+        "",
+        {
+          validators: [
+            Validators.required,
+            Validators.pattern(
+              "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$",
+            ),
+          ],
+          updateOn: "change",
+        },
+      ],
+      password: [
+        "",
+        {
+          validators: [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(20),
+          ],
+          updateOn: "change",
+        },
+      ],
+      // ,
+      // repassword: [
+      // 	'',
+      // 	{
+      // 		validators: [ Validators.required ],
+      // 		updateOn: 'change',
+      // 	},
+      // ],
+    });
+  }
 
-	ngOnInit(): void {}
+  ngOnInit(): void {}
 
-	register() {
-		if (!this.formularioRegister.valid) this.formularioRegister.markAllAsTouched();
-	}
+  VALIDATION_MESSAGES = {
+    firstname: [
+      { type: "required", message: "El nombre es requerido" },
+      {
+        type: "minlength",
+        message: "El nombre debe tener al menos 4 caracteres",
+      },
+      {
+        type: "maxlength",
+        message: "El nombre no puede tener más de 70 caracteres",
+      },
+      { type: "pattern", message: "El nombre debe contener solo letras" },
+    ],
+    lastname: [
+      { type: "required", message: "Los apellidos son requeridos" },
+      {
+        type: "minlength",
+        message: "Los apellidos debe tener al menos 4 caracteres",
+      },
+      {
+        type: "maxlength",
+        message: "Los apellidos no puede tener más de 70 caracteres",
+      },
+      { type: "pattern", message: "Los apellidos deben contener solo letras" },
+    ],
+    email: [
+      { type: "required", message: "El correo electrónico es requerido" },
+      { type: "pattern", message: "Formato de correo electrónico inválido" },
+    ],
+    password: [
+      { type: "required", message: "La contraseña es requerida" },
+      {
+        type: "minlength",
+        message: "La contraseña debe tener al menos 6 caracteres",
+      },
+      {
+        type: "maxlength",
+        message: "La contraseña no puede tener más de 20 caracteres",
+      },
+    ],
+  };
 
-	VALIDATION_MESSAGES = {
-		nombres: [
-			{ type: 'required', message: 'El nombre es requerido' },
-			{
-				type: 'minlength',
-				message: 'El nombre debe tener al menos 4 caracteres',
-			},
-			{
-				type: 'maxlength',
-				message: 'El nombre no puede tener más de 70 caracteres',
-			},
-			{ type: 'pattern', message: 'El nombre debe contener solo letras' },
-		],
-		correo: [
-			{ type: 'required', message: 'El correo electrónico es requerido' },
-			{ type: 'pattern', message: 'Formato de correo electrónico inválido' },
-		],
-		password: [
-			{ type: 'required', message: 'La contraseña es requerida' },
-			{
-				type: 'minlength',
-				message: 'La contraseña debe tener al menos 6 caracteres',
-			},
-			{
-				type: 'maxlength',
-				message: 'La contraseña no puede tener más de 20 caracteres',
-			},
-		],
+  get data() {
+    return this.formularioRegister.controls;
+  }
 
-		// repassword: [
-		// 	{ type: 'required', message: 'La contraseña es requerida' },
-		// 	{
-		// 		type: 'minlength',
-		// 		message: 'La contraseña debe tener al menos 6 caracteres',
-		// 	},
-		// 	{
-		// 		type: 'maxlength',
-		// 		message: 'La contraseña no puede tener más de 20 caracteres',
-		// 	},
-		// ],
-	};
+  // onSubmit() {
+  //   if (this.formularioRegister.invalid) {
+  //     this.formularioRegister.markAllAsTouched();
+  //   } else {
+  //     localStorage.setItem("firstname", this.data.firstname.value);
+  //     localStorage.setItem("lastname", this.data.lastname.value);
+  //     localStorage.setItem("email", this.data.email.value);
+  //     // localStorage.setItem("password", this.data.password.value);
+
+  //     console.log(this.formularioRegister.value);
+
+  //     this._authService.register(this.formularioRegister.value).subscribe(
+  //       (result) => {
+  //         console.log(result);
+
+  //         this._snackBar.open("Register Successfully", "Success", {
+  //           duration: 3000,
+  //         });
+  //         this.router.navigate(["/login"]);
+  //       },
+  //       (err) => {
+  //         debugger;
+  //         console.log(err.error.error.message);
+  //       },
+  //     );
+
+  //   }
+  // }
+
+  async onSubmit() {
+    if (this.formularioRegister.invalid) {
+      this.formularioRegister.markAllAsTouched();
+    } else {
+      localStorage.setItem("firstname", this.data.firstname.value);
+      localStorage.setItem("lastname", this.data.lastname.value);
+      localStorage.setItem("email", this.data.email.value);
+      // localStorage.setItem("password", this.data.password.value);
+
+      const res = await this._authService.registerFirebase(
+        this.formularioRegister.value,
+      );
+      this.router.navigate(["/home"]);
+      console.log(res);
+    }
+  }
 }

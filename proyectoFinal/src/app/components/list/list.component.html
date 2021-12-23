@@ -1,33 +1,17 @@
-<div class="list-group">
-  <div *ngFor="let item of listadoPeliculas">
-    <div class="list-group-item list-group-item-action"
-      [ngClass]="item.estado == 0 ? 'list-group-item-danger' : 'list-group-item-info'" aria-current="true">
-      <div class="row">
-        <div class="col-3">
-          <img src="assets/images/{{item.imagen}}.jpg" class="img-responsive" style="max-width:5em">
-          <hr>
+<mat-card class="example-card mb-1" *ngFor="let item of $listadoPeliculas | async" [ngClass]="item.estado == 0 ? 'list-group-item-danger' : 'list-group-item-info'">
+  <mat-card-title-group>
+    <mat-card-title>{{item.nombre}} </mat-card-title>
+    <mat-card-subtitle> {{item.descripcion}}</mat-card-subtitle>
+    <img *ngIf="item.imagen !== ''" mat-card-lg-image src="assets/images/{{item?.imagen}}.jpg" class="img-responsive" style="max-width:6em">
+    <mat-card-subtitle>Valor : ${{item.precio}}</mat-card-subtitle>
+  </mat-card-title-group>
+  <mat-card-content>
+    <small> <span *ngIf="item.estado == 0" class="badge bg-danger rounded-pill">En Prestamo</span></small>
+    <small> <span *ngIf="item.estado == 1" class="badge bg-primary rounded-pill">Disponible</span></small>
+    <mat-card-actions>
+      <button mat-stroked-button color="primary" [routerLink]="['/info', item.id]"><mat-icon matListIcon>info</mat-icon></button>
+      <button mat-stroked-button color="warn"  *ngIf="item.estado == 1" (click)="onAddToCart(item)">    <mat-icon matListIcon>add_shopping_cart</mat-icon></button>
+    </mat-card-actions>
 
-          <button type="button" class="btn btn-dark btn-xs" [routerLink]="['/info', item.id]"><i class="fas fa-plus">
-            </i> Ver más Info </button>
-        </div>
-        <div class="col-8">
-          <h5 class="mb-1">{{item.nombre}}</h5>
-
-          <small> <span *ngIf="item.estado == 0" class="badge bg-danger rounded-pill">En Prestamo</span>
-            <span *ngIf="item.estado == 1" class="badge bg-primary rounded-pill">Disponible</span></small>
-          <p class="mb-1">{{item.descripcion}}</p>
-          <small>Precio: <strong>$ {{item.precio}}</strong> </small>
-        </div>
-
-        <div class="col-1">
-
-          <button type="button" class="btn btn-light" *ngIf="item.estado == 1" (click)="onAddToCart(item)"><i
-              class="fas fa-cart-plus"></i></button>
-        </div>
-
-
-      </div>
-
-    </div>
-  </div>
-</div>
+  </mat-card-content>
+</mat-card>
