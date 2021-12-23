@@ -1,9 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { IPelicula } from "src/app/models/film";
 import { PelisService } from "src/app/services/pelis.service";
-
+import { EditarComponent } from "src/app/views/backoffice/editar/editar.component";
 @Component({
   selector: "app-backoffice",
   templateUrl: "./backoffice.component.html",
@@ -13,12 +14,20 @@ export class BackofficeComponent implements OnInit {
   formularioPeliculas!: FormGroup;
   listadoPeliculas: IPelicula[] = [];
 
-  displayedColumns: string[] = ["id", "nombre", "descripcion","precio","actions"];
+  displayedColumns: string[] = [
+    "id",
+    "nombre",
+    "descripcion",
+    "precio",
+    "actions",
+  ];
 
   constructor(
     private fb: FormBuilder,
     private pelisService: PelisService,
     private _snackBar: MatSnackBar,
+    private changeDetectorRefs: ChangeDetectorRef,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +46,6 @@ export class BackofficeComponent implements OnInit {
       this.listadoPeliculas = result;
       console.log(this.listadoPeliculas);
     });
-   
   }
 
   guardarPelicula(pelicula: any) {
@@ -51,11 +59,26 @@ export class BackofficeComponent implements OnInit {
   }
 
   eliminarPelicula(id: string) {
+    debugger;
     this.pelisService.deletePelicula(id).subscribe((result) => {
       console.log("pelicula eliminada", result);
       this._snackBar.open("La pelicula se elimino éxitosamente!", "eliminado", {
         duration: 3000,
       });
+      this.changeDetectorRefs.detectChanges();
+      this.obtenerPeliculas();
+    });
+  }
+
+  editarPelicula(id: string) {
+    const dialogRef = this.dialog.open(EditarComponent, {
+      data: {
+        id: id,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      this.changeDetectorRefs.detectChanges();
+      this.obtenerPeliculas();
     });
   }
 
@@ -80,9 +103,9 @@ export class BackofficeComponent implements OnInit {
           Validators.required,
           Validators.minLength(4),
           Validators.maxLength(70),
-          Validators.pattern(
-            "^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœñ ]+$",
-          ),
+          // Validators.pattern(
+          //   "^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœñ ]+$",
+          // ),
         ]),
       ],
       descripcion: [
@@ -90,7 +113,7 @@ export class BackofficeComponent implements OnInit {
         Validators.compose([
           Validators.required,
           Validators.minLength(4),
-          Validators.maxLength(70),
+          Validators.maxLength(300),
         ]),
       ],
       precio: ["", Validators.compose([Validators.required])],
@@ -127,12 +150,12 @@ export class BackofficeComponent implements OnInit {
       },
       {
         type: "maxlength",
-        message: "La descipción no puede tener más de 70 caracteres",
+        message: "El nombre  no puede tener más de 70 caracteres",
       },
-      {
-        type: "pattern",
-        message: "El nombre de la pelicula debe contener solo letras",
-      },
+      // {
+      //   type: "pattern",
+      //   message: "El nombre de la pelicula debe contener solo letras",
+      // },
     ],
     descripcion: [
       { type: "required", message: "La descripción es requerida" },
@@ -142,7 +165,7 @@ export class BackofficeComponent implements OnInit {
       },
       {
         type: "maxlength",
-        message: "La descripción no puede tener más de 70 caracteres",
+        message: "La descripción no puede tener más de 300 caracteres",
       },
     ],
     precio: [{ type: "required", message: "El precio es requerido" }],

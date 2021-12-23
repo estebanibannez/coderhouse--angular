@@ -19,6 +19,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { AngularFireModule } from "@angular/fire/compat";
 import { environment } from "../environments/environment";
 import { BackofficeComponent } from './views/backoffice/backoffice.component';
+import { EditarComponent } from './views/backoffice/editar/editar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +33,7 @@ import { BackofficeComponent } from './views/backoffice/backoffice.component';
     HomeComponent,
     NotFound404Component,
     BackofficeComponent,
+    EditarComponent,
   ],
   imports: [
     BrowserModule,

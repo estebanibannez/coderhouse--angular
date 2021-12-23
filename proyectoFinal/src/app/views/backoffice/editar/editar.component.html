@@ -1,0 +1,132 @@
+<p>editar works!</p>
+<h1 mat-dialog-title>Message</h1>
+<mat-dialog-content>
+    <form [formGroup]="formularioPeliculaEditar" class="example-form">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Nombre pelicula</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="nombre"
+            maxlength="70"
+            placeholder=""
+          />
+          <mat-hint
+            class="text-danger"
+            *ngIf="
+              formularioPeliculaEditar.controls['nombre']?.invalid &&
+              (formularioPeliculaEditar.controls['nombre']?.dirty ||
+                formularioPeliculaEditar.controls['nombre']?.touched)
+            "
+          >
+            <div *ngFor="let validation of VALIDATION_MESSAGES.nombre">
+              <span
+                *ngIf="
+                  formularioPeliculaEditar.get('nombre')?.hasError(validation.type) &&
+                  (formularioPeliculaEditar.get('nombre')?.dirty ||
+                    formularioPeliculaEditar.get('nombre')?.touched)
+                "
+              >
+                <strong>{{ validation.message }} </strong>
+              </span>
+            </div>
+          </mat-hint>
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Descripción</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="descripcion"
+            maxlength="300"
+            placeholder=""
+          />
+          <mat-hint
+            class="text-danger"
+            *ngIf="
+              formularioPeliculaEditar.controls['descripcion']?.invalid &&
+              (formularioPeliculaEditar.controls['descripcion']?.dirty ||
+                formularioPeliculaEditar.controls['descripcion']?.touched)
+            "
+          >
+            <div *ngFor="let validation of VALIDATION_MESSAGES.descripcion">
+              <span
+                *ngIf="
+                  formularioPeliculaEditar
+                    .get('descripcion')
+                    ?.hasError(validation.type) &&
+                  (formularioPeliculaEditar.get('descripcion')?.dirty ||
+                    formularioPeliculaEditar.get('descripcion')?.touched)
+                "
+              >
+                <strong>{{ validation.message }} </strong>
+              </span>
+            </div>
+          </mat-hint>
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Precio</mat-label>
+          <input type="text" matInput formControlName="precio" placeholder="" />
+          <mat-hint
+            class="text-danger"
+            *ngIf="
+              formularioPeliculaEditar.controls['precio']?.invalid &&
+              (formularioPeliculaEditar.controls['precio']?.dirty ||
+                formularioPeliculaEditar.controls['precio']?.touched)
+            "
+          >
+            <div *ngFor="let validation of VALIDATION_MESSAGES.precio">
+              <span
+                *ngIf="
+                  formularioPeliculaEditar.get('precio')?.hasError(validation.type) &&
+                  (formularioPeliculaEditar.get('precio')?.dirty ||
+                    formularioPeliculaEditar.get('precio')?.touched)
+                "
+              >
+                <strong>{{ validation.message }} </strong>
+              </span>
+            </div>
+          </mat-hint>
+        </mat-form-field>
+  
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Stock</mat-label>
+          <input type="text" matInput formControlName="stock" placeholder="" />
+          <mat-hint
+            class="text-danger"
+            *ngIf="
+              formularioPeliculaEditar.controls['stock']?.invalid &&
+              (formularioPeliculaEditar.controls['stock']?.dirty ||
+                formularioPeliculaEditar.controls['stock']?.touched)
+            "
+          >
+            <div *ngFor="let validation of VALIDATION_MESSAGES.stock">
+              <span
+                *ngIf="
+                  formularioPeliculaEditar.get('stock')?.hasError(validation.type) &&
+                  (formularioPeliculaEditar.get('stock')?.dirty ||
+                    formularioPeliculaEditar.get('stock')?.touched)
+                "
+              >
+                <strong>{{ validation.message }} </strong>
+              </span>
+            </div>
+          </mat-hint>
+        </mat-form-field>
+        <!-- pruebas data binding -->
+        <!-- <p>
+              {{ formularioContacto.value  | json }}
+            </p> -->
+  
+        <div class="mb-3 row p-3">
+          <button mat-stroked-button color="primary" (click)="onEdit()">
+            GUARDAR
+          </button>
+        </div>
+      </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button (click)="closeMe()">Close</button>
+</mat-dialog-actions>
