@@ -63,14 +63,13 @@ export class RegisterComponent implements OnInit {
           updateOn: "change",
         },
       ],
-      // ,
-      // repassword: [
-      // 	'',
-      // 	{
-      // 		validators: [ Validators.required ],
-      // 		updateOn: 'change',
-      // 	},
-      // ],
+      rol: [
+        "admin",
+        {
+          validators: [Validators.required],
+          updateOn: "change",
+        },
+      ],
     });
   }
 
@@ -116,13 +115,35 @@ export class RegisterComponent implements OnInit {
         message: "La contraseña no puede tener más de 20 caracteres",
       },
     ],
+    rol: [{ type: "required", message: "La contraseña es requerida" }],
   };
 
   get data() {
     return this.formularioRegister.controls;
   }
 
-  // onSubmit() {
+  onSubmit() {
+    if (this.formularioRegister.invalid) {
+      this.formularioRegister.markAllAsTouched();
+    } else {
+
+      this._authService.register(this.formularioRegister.value).subscribe(
+        (result) => {
+          this._snackBar.open("Se creó tu cuenta con éxito.", "Success", {
+            duration: 3000,
+          });
+          debugger;
+          this.router.navigate(["/home"]);
+        },
+        (err) => {
+          debugger;
+          console.log(err.error.error.message);
+        },
+      );
+    }
+  }
+
+  // async onSubmit() {
   //   if (this.formularioRegister.invalid) {
   //     this.formularioRegister.markAllAsTouched();
   //   } else {
@@ -131,40 +152,11 @@ export class RegisterComponent implements OnInit {
   //     localStorage.setItem("email", this.data.email.value);
   //     // localStorage.setItem("password", this.data.password.value);
 
-  //     console.log(this.formularioRegister.value);
-
-  //     this._authService.register(this.formularioRegister.value).subscribe(
-  //       (result) => {
-  //         console.log(result);
-
-  //         this._snackBar.open("Register Successfully", "Success", {
-  //           duration: 3000,
-  //         });
-  //         this.router.navigate(["/login"]);
-  //       },
-  //       (err) => {
-  //         debugger;
-  //         console.log(err.error.error.message);
-  //       },
+  //     const res = await this._authService.registerFirebase(
+  //       this.formularioRegister.value,
   //     );
-
+  //     this.router.navigate(["/home"]);
+  //     console.log(res);
   //   }
   // }
-
-  async onSubmit() {
-    if (this.formularioRegister.invalid) {
-      this.formularioRegister.markAllAsTouched();
-    } else {
-      localStorage.setItem("firstname", this.data.firstname.value);
-      localStorage.setItem("lastname", this.data.lastname.value);
-      localStorage.setItem("email", this.data.email.value);
-      // localStorage.setItem("password", this.data.password.value);
-
-      const res = await this._authService.registerFirebase(
-        this.formularioRegister.value,
-      );
-      this.router.navigate(["/home"]);
-      console.log(res);
-    }
-  }
 }

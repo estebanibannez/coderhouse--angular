@@ -127,6 +127,38 @@
         </mat-hint>
       </mat-form-field>
 
+      
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Rol</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="rol"
+          maxlength="5"
+          placeholder="admin"
+        />
+        <mat-hint
+          class="text-danger"
+          *ngIf="
+            formularioRegister.controls['rol']?.invalid &&
+            (formularioRegister.controls['rol']?.dirty ||
+              formularioRegister.controls['rol']?.touched)
+          "
+        >
+          <div *ngFor="let validation of VALIDATION_MESSAGES.rol">
+            <span
+              *ngIf="
+                formularioRegister.get('rol')?.hasError(validation.type) &&
+                (formularioRegister.get('rol')?.dirty ||
+                  formularioRegister.get('rol')?.touched)
+              "
+            >
+              <strong>{{ validation.message }} </strong>
+            </span>
+          </div>
+        </mat-hint>
+      </mat-form-field>
+
       <!-- pruebas data binding -->
       <!-- <p>
           {{ formularioContacto.value  | json }}

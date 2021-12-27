@@ -11,7 +11,9 @@ export const environment = {
     storageBucket: "coder-angular-login.appspot.com",
     messagingSenderId: "1004066077972",
     appId: "1:1004066077972:web:dd669132e98eae05789601"
-  }
+  },
+  ResourceServer:"https://61c097ee33f24c00178234f9.mockapi.io/",
+  ApiVersion: "api/v1"
 };
 
 /*

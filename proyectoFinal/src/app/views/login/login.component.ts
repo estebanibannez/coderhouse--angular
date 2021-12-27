@@ -90,18 +90,14 @@ export class LoginComponent implements OnInit {
     this.authService.login(user).subscribe(
       (data) => {
         debugger;
-        if (this.authService.isLoggedIn()) {
-          // const redirect = this.authService.redirectUrl
-          //   ? this.authService.redirectUrl
-          //   : "/";
-          // this.router.navigate([redirect]);
 
-          this.router.navigateByUrl("/home");
-        } else {
-          // this.loginError = "email or password is incorrect.";
-        }
+        this.router.navigateByUrl("/home");
       },
-      (error) => error,
+      (error) => {
+        this._snackBar.open("Ocurrio un error", error, {
+          duration: 3000,
+        });
+      },
     );
   }
 }

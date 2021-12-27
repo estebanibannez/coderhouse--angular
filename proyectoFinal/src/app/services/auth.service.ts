@@ -1,41 +1,57 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { EventEmitter, Injectable, Output } from "@angular/core";
+import { BehaviorSubject, Observable } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { IUser } from "src/app/models/user";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
   ENDPOINT: string;
-  constructor(private http: HttpClient, private afsAuth: AngularFireAuth) {
-    this.ENDPOINT = `https://61c097ee33f24c00178234f9.mockapi.io/api/v1`;
-    this.isLoggedIn();
+  @Output() fireIsLoggedIn: EventEmitter<any> = new EventEmitter<any>();
+  private userSubject: BehaviorSubject<any>;
+
+  constructor(
+    private http: HttpClient,
+    private afsAuth: AngularFireAuth,
+    private router: Router,
+  ) {
+    this.ENDPOINT = `${environment.ResourceServer}${environment.ApiVersion}/usuarios`;
+    // this.isLoggedIn();
+    this.userSubject = new BehaviorSubject<any>(
+      JSON.parse(localStorage.getItem("currentUser")!),
+    );
+  }
+
+  public get userRol(): string {
+    return this.userSubject.value.rol;
   }
 
   login(user: any): Observable<any> {
     const { email, password } = user;
-    return this.http.get<any>(`${this.ENDPOINT}/usuarios`, user).pipe(
+    return this.http.get<any>(`${this.ENDPOINT}`, user).pipe(
       map((user: any) => {
         if (user) {
           debugger;
-          console.log("usuarios.", user);
           const usuario = user.find((usuario: any) => {
             debugger;
             if (usuario.email === email && usuario.password === password) {
               return usuario;
             }
           });
-          console.log("existe.", usuario);
           if (usuario) {
-            localStorage.setItem("currentUser", JSON.stringify(user));
+            localStorage.setItem("currentUser", JSON.stringify(usuario));
+            this.userSubject.next(usuario);
+            this.fireIsLoggedIn.emit("loggedIn");
+            return usuario;
           }
         }
       }),
     );
-    
   }
 
   async loginFirebase({ email, password }: any) {
@@ -57,11 +73,16 @@ export class AuthService {
   }
 
   register(user: IUser): Observable<any> {
+    debugger;
     return this.http.post<any>(`${this.ENDPOINT}/usuarios`, user).pipe(
       map((user: any) => {
         if (user) {
           debugger;
+
           localStorage.setItem("currentUser", JSON.stringify(user));
+          this.userSubject.next(user);
+          this.fireIsLoggedIn.emit("loggedIn");
+          return user;
         }
       }),
     );
@@ -81,5 +102,11 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem("currentUser");
+    this.userSubject.next(null);
+    this.router.navigate(["/login"]);
+  }
+
+  getEmitter() {
+    return this.fireIsLoggedIn;
   }
 }
