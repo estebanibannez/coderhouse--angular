@@ -27,18 +27,15 @@ export class PelisService {
   }
 
   addPelicula(pelicula: IPelicula): Observable<any> {
-    debugger;
     console.log(pelicula);
     return this.http.post<IPelicula>(`${this.ENDPOINT}/peliculas`, pelicula);
   }
 
   deletePelicula(id: string): Observable<any> {
-    debugger;
     return this.http.delete<IPelicula>(`${this.ENDPOINT}/peliculas/${id}`);
   }
 
   updatePelicula(id: string, pelicula: IPelicula): Observable<any> {
-    debugger;
     return this.http.put<IPelicula>(
       `${this.ENDPOINT}/peliculas/${id}`,
       pelicula,

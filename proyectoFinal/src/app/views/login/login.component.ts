@@ -89,8 +89,6 @@ export class LoginComponent implements OnInit {
     };
     this.authService.login(user).subscribe(
       (data) => {
-        debugger;
-
         this.router.navigateByUrl("/home");
       },
       (error) => {

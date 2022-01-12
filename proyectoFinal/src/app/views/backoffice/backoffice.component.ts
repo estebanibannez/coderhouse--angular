@@ -59,7 +59,6 @@ export class BackofficeComponent implements OnInit {
   }
 
   eliminarPelicula(id: string) {
-    debugger;
     this.pelisService.deletePelicula(id).subscribe((result) => {
       console.log("pelicula eliminada", result);
       this._snackBar.open("La pelicula se elimino éxitosamente!", "eliminado", {

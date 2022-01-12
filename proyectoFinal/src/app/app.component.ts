@@ -18,15 +18,12 @@ export class AppComponent implements OnInit {
   }
 
   getRoles() {
-    debugger;
     this.authService.getEmitter().subscribe((data) => {
-      debugger;
       if (data === "loggedIn") {
         this.userLogged = true;
 
         if (this.authService.userRol != null) {
           if (this.authService.userRol.toLowerCase().includes("admin")) {
-            debugger;
             this.backendUser = true;
           }
         }

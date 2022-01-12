@@ -126,17 +126,15 @@ export class RegisterComponent implements OnInit {
     if (this.formularioRegister.invalid) {
       this.formularioRegister.markAllAsTouched();
     } else {
-
       this._authService.register(this.formularioRegister.value).subscribe(
         (result) => {
           this._snackBar.open("Se creó tu cuenta con éxito.", "Success", {
             duration: 3000,
           });
-          debugger;
+
           this.router.navigate(["/home"]);
         },
         (err) => {
-          debugger;
           console.log(err.error.error.message);
         },
       );

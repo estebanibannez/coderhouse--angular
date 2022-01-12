@@ -30,21 +30,17 @@ export class CartComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    debugger;
-
     console.log(changes);
     throw new Error("Method not implemented.");
   }
 
   ngOnInit(): void {
     this.cartService.peliculasAgregadas$.subscribe((data) => {
-      debugger;
       this.listadoPeliculas = data.carrito.peliculas;
       this.carrito = data.carrito;
       this.cartTotal = data.cartTotal;
       this.numPeliculas = data.carrito.peliculas.reduce(
         (acc: any, pelicula: any) => {
-          debugger;
           acc += pelicula.cantidad;
           return acc;
         },

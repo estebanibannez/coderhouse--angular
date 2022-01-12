@@ -36,9 +36,7 @@ export class AuthService {
     return this.http.get<any>(`${this.ENDPOINT}`, user).pipe(
       map((user: any) => {
         if (user) {
-          debugger;
           const usuario = user.find((usuario: any) => {
-            debugger;
             if (usuario.email === email && usuario.password === password) {
               return usuario;
             }
@@ -73,12 +71,9 @@ export class AuthService {
   }
 
   register(user: IUser): Observable<any> {
-    debugger;
     return this.http.post<any>(`${this.ENDPOINT}/usuarios`, user).pipe(
       map((user: any) => {
         if (user) {
-          debugger;
-
           localStorage.setItem("currentUser", JSON.stringify(user));
           this.userSubject.next(user);
           this.fireIsLoggedIn.emit("loggedIn");

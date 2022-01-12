@@ -131,11 +131,14 @@ export class EditarComponent implements OnInit {
     this.pelisService
       .updatePelicula(this.id, this.formularioPeliculaEditar.value)
       .subscribe((result) => {
-        debugger
         console.log(result);
-        this._snackBar.open("La pelicula se actualizó éxitosamente!", "guardado", {
-          duration: 3000,
-        });
+        this._snackBar.open(
+          "La pelicula se actualizó éxitosamente!",
+          "guardado",
+          {
+            duration: 3000,
+          },
+        );
       });
   }
 }
