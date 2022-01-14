@@ -1,121 +1,44 @@
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
-import Model from "../models/usuarios.js";
-import { Configuration } from "../config.js";
-
+import usuariosDao from "../dao/usuarios.dao.js";
+import bcrypt from "bcrypt";
 class ControllerUsuarios {
-  createUser = async (req, res, next) => {
+  // crea un nuevo usuario
+  async createUser(req) {
     const newUser = {
-      nombre: req.body.nombre,
-      email: req.body.email,
-      isAdmin: req.body.isAdmin,
-      direccion: req.body.direccion,
-      telefono: req.body.telefono,
-      foto: req.body.foto,
-      password: bcrypt.hashSync(req.body.password),
+      nombre: req.nombre,
+      email: req.email,
+      isAdmin: req.isAdmin,
+      direccion: req.direccion,
+      telefono: req.telefono,
+      foto: req.foto,
+      password: bcrypt.hashSync(req.password, 10),
     };
+    console.log(newUser);
 
-    Model.create(newUser, (err, user) => {
-      if (err && err.code === 11000)
-        return res.send({ message: "Email already exists" });
-      if (err)
-        return res.send({ message: "Server error!", error: err.message });
-      const expiresIn = 60;
-      const accessToken = jwt.sign({ id: user.id }, Configuration.SECRET_KEY, {
-        expiresIn: expiresIn,
-      });
-      const dataUser = {
-        name: user.name,
-        email: user.email,
-        accessToken: accessToken,
-        expiresIn: expiresIn,
+    return await usuariosDao.create(newUser);
+  }
+
+  //logea un usuario
+  async loginUser(req) {
+    try {
+      const userData = {
+        email: req.email,
+        password: req.password,
       };
-      // response
-      res.send({ dataUser });
-    });
-  };
 
-  loginUser = async (req, res, next) => {
-    const userData = {
-      email: req.body.email,
-      password: req.body.password,
-    };
-    Model.findOne({ email: userData.email }, (err, user) => {
-      if (err) return res.send({ message: "Server error!" });
+      return await usuariosDao.login(userData);
+    } catch (error) {
+      throw error;
+    }
+  }
 
-      if (!user) {
-        // email does not exist
-        res.send({
-          message: "Something is wrong",
-          error: "usuario no encontrado",
-        });
-      } else {
-        const resultPassword = bcrypt.compareSync(
-          userData.password,
-          user.password,
-        );
-        if (resultPassword) {
-          const expiresIn = 60;
-          const accessToken = jwt.sign({ id: user.id }, Configuration.SECRET_KEY, {
-            expiresIn: expiresIn,
-          });
-
-          const dataUser = {
-            email: user.email,
-            nombre: user.nombre,
-            direccion: user.direccion,
-            telefono: user.telefono,
-            foto: user.foto,
-            isAdmin: user.isAdmin,
-            createdAt: user.createdAt,
-            updatedAt: user.updatedAt,
-            accessToken: accessToken,
-            expiresIn: expiresIn,
-          };
-          res.send({ dataUser });
-        } else {
-          // password wrong
-          res.send({
-            message: "Something is wrong",
-            error: "contraseña errónea",
-          });
-        }
-      }
-    });
-  };
-
-  datosUser = async (req, res, next) => {
-    let id = req.decoded.id;
-    //console.log(id)
-
-    Model.findOne({ _id: id }, (err, user) => {
-      if (err) return res.send({ message: "Server error!" });
-
-      if (!user) {
-        // id does not exist
-        res.send({ message: "Something is wrong" });
-      } else {
-        const expiresIn = 60;
-        const accessToken = jwt.sign({ id: user.id }, Configuration.SECRET_KEY, {
-          expiresIn: expiresIn,
-        });
-
-        res.json({
-          user: {
-            email: user.email,
-            nombre: user.nombre,
-            direccion: user.direccion,
-            telefono: user.telefono,
-            foto: user.foto,
-            isAdmin: user.isAdmin,
-            createdAt: user.createdAt,
-            updatedAt: user.updatedAt,
-            accessToken,
-          },
-        });
-      }
-    });
-  };
+  //obtiene la data de un usuario
+  async datosUser(req) {
+    try {
+      return await usuariosDao.getDataUser(req);
+    } catch (error) {
+      throw error;
+    }
+  }
 
   logoutUser = async (req, res, next) => {
     res.json({ logout: "ok" });

@@ -10,7 +10,7 @@ export class MongoDB {
             useNewUrlParser: true,
             useUnifiedTopology: true,
           });
-          console.log(`Base de datos MongoDB conectada`);
+          console.log(`Base de datos MongoDB conectada`, URL);
 
           MongoDB.conectada = true;
 

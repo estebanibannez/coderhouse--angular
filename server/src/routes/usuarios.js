@@ -5,14 +5,14 @@ import { Configuration } from "../config.js";
 import controller from "../controller/usuarios.js";
 
 const rutasProtegidas = (req, res, next) => {
-  const token = req.headers["access-token"];
+  var token = req.headers.authorization.split(" ")[1];
 
   if (token) {
     jwt.verify(token, Configuration.SECRET_KEY, (err, decoded) => {
       if (err) {
         console.log("Token no válida");
         //res.redirect('/')
-        res.send({ mensaje: "Token no válida" });
+        res.json({ mensaje: "Token no válida" });
       } else {
         req.decoded = decoded;
         console.log(decoded);
@@ -23,22 +23,55 @@ const rutasProtegidas = (req, res, next) => {
   } else {
     console.log("Token no provista");
     //res.redirect('/')
-    res.send({ mensaje: "Token no provista" });
+    res.json({ mensaje: "Token no provista" });
   }
 };
-
-//Le configuro las rutas
 
 router.post("/register", async (req, res) => {
   try {
     let result = await controller.createUser(req.body);
-    return res.json(result);
+    console.log(result);
+    return res.json({
+      status: 200,
+      message: "Usuario creado éxitosamente",
+      data: result,
+    });
   } catch (error) {
-    return res.status(500).send({ error: error.message });
+    if (error.code === 11000)
+      return res
+        .status(200)
+        .json({
+          message: "email ya se encuentra registrado, intente con otro",
+        });
+    return res.status(500).json({ error: error.message });
   }
 });
-// router.post("/login", controller.loginUser);
-// router.get("/datos", rutasProtegidas, controller.datosUser);
-// router.get("/logout", controller.logoutUser);
+
+router.post("/login", async (req, res) => {
+  try {
+    let result = await controller.loginUser(req.body);
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+router.get("/datos", rutasProtegidas, async (req, res) => {
+  try {
+    let result = await controller.datosUser(req);
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+router.get("/logout", async (req, res) => {
+  try {
+    let result = await controller.logoutUser();
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
 
 export default router;
